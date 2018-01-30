@@ -23,7 +23,7 @@ Pod::Spec.new do |s|
 
   s.ios.deployment_target = "7.0"
 
-  s.source       = { :git => "https://github.com/huangzhifei/ECLinearActivityIndicator.git", :tag => "s.version" }
+  s.source       = { :git => "https://github.com/huangzhifei/ECLinearActivityIndicator.git", :tag => s.version }
 
   s.source_files  = "ECLinearActivityIndicator/class/*.{h,m}"
 
