@@ -1,7 +1,7 @@
 Pod::Spec.new do |s|
 
   s.name         = "ECLinearActivityIndicator"
-  s.version      = "0.0.1"
+  s.version      = "0.0.2"
   s.summary      = "Add the missing network activity indicator on iPhone X"
 
   s.description  = <<-DESC
@@ -13,20 +13,22 @@ Pod::Spec.new do |s|
  	 existing API)
                    DESC
 
-  s.homepage     = "http://github.com/huangzhifei/ECLinearActivityIndicator"
+  s.homepage     = "https://github.com/huangzhifei/ECLinearActivityIndicator"
 
   s.license      = "MIT"
 
   s.author             = { "hzf" => "huangzhifei2009@126.com" }
 
-  s.platform     = :ios, "7.0"
+  s.platform     = :ios
 
   s.ios.deployment_target = "7.0"
 
   s.source       = { :git => "https://github.com/huangzhifei/ECLinearActivityIndicator.git", :tag => "s.version" }
 
-  s.source_files  = "ECLinearActivityIndicator/ECLinearActivityIndicator/class/*"
+  s.source_files  = "ECLinearActivityIndicator/class/*.{h,m}"
 
   s.frameworks  = "UIKit"
+
+  s.requires_arc = true
 
 end
