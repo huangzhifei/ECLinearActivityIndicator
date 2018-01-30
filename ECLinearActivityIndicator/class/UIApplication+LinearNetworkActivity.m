@@ -33,16 +33,8 @@
 - (void)_configureLinearNetworkActivityIndicator {
     static dispatch_once_t onceToken;
     dispatch_once(&onceToken, ^{
-//        Class class = [self class];
         SEL originalSelector = @selector(setNetworkActivityIndicatorVisible:);
         SEL swizzledSelector = @selector(ec_setNetworkActivityIndicatorVisible:);
-//        Method originalMethod = class_getInstanceMethod(class, originalSelector);
-//        Method swizzledMethod = class_getInstanceMethod(class, swizzledSelector);
-//        if (class_addMethod(class, originalSelector, method_getImplementation(swizzledMethod), method_getTypeEncoding(swizzledMethod))) {
-//            class_replaceMethod(class, swizzledSelector, method_getImplementation(originalMethod), method_getTypeEncoding(originalMethod));
-//        } else {
-//            method_exchangeImplementations(originalMethod, swizzledMethod);
-//        }
         EC_Objc_exchangeMethodAToB(originalSelector, swizzledSelector);
     });
     [UIViewController configureLinearNetworkActivityIndicator];
@@ -56,6 +48,7 @@
         if (self.indicatorWindow == nil) {
             self.indicatorWindow = [[UIWindow alloc] initWithFrame:self.statusBarFrame];
             self.indicatorWindow.hidden = NO;
+            // 对于 UIWindows 只需要改变 zIndex 就行
             self.indicatorWindow.windowLevel = UIWindowLevelStatusBar + 1;
             
             CGRect frame = CGRectMake(self.indicatorWindow.frame.size.width - 74, 6, 44, 4);
@@ -96,7 +89,6 @@
 }
 
 - (UIWindow *)indicatorWindow {
-    NSLog(@"==%@: ", EC_Objc_getObj);
     return EC_Objc_getObj;
 }
 

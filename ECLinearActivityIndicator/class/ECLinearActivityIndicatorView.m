@@ -8,7 +8,7 @@
 
 #import "ECLinearActivityIndicatorView.h"
 
-@interface ECLinearActivityIndicatorView()
+@interface ECLinearActivityIndicatorView ()
 
 @property (nonatomic, strong) CAGradientLayer *leftGradientLayer;
 @property (nonatomic, strong) CAGradientLayer *rightGradientLayer;
@@ -22,19 +22,30 @@
 
 - (instancetype)init {
     if (self = [super init]) {
-        _animating = NO;
-        _hidesWhenStopped = YES;
-        _duration = 1.5;
+        [self commonInit];
     }
     return self;
 }
 
+- (instancetype)initWithFrame:(CGRect)frame {
+    if (self = [super initWithFrame:frame]) {
+        [self commonInit];
+    }
+    return self;
+}
+
+- (void)commonInit {
+    _animating = NO;
+    _hidesWhenStopped = YES;
+    _duration = 1.5;
+}
+
 - (void)layoutSubviews {
     [super layoutSubviews];
-    
+
     self.clipsToBounds = true;
     self.layer.cornerRadius = self.bounds.size.height * 0.5;
-    
+
     if (self.hidesWhenStopped) {
         self.hidden = !self.animating;
     }
@@ -47,9 +58,11 @@
         UIColor *color = [self.tintColor colorWithAlphaComponent:0.7];
         UIColor *clearColor = [self.tintColor colorWithAlphaComponent:0];
         _leftGradientLayer = [CAGradientLayer layer];
-        _leftGradientLayer.colors = @[clearColor, color];
-        _leftGradientLayer.startPoint = CGPointMake(0.5, 0);
-        _leftGradientLayer.endPoint = CGPointMake(1, 0);
+        /// 注意这里的颜色数组是 CGColor 不是 UIColor，不然就会被坑
+        _leftGradientLayer.colors = @[ (__bridge id) clearColor.CGColor,
+                                       (__bridge id) color.CGColor ];
+        _leftGradientLayer.startPoint = CGPointMake(0.5, 0.0);
+        _leftGradientLayer.endPoint = CGPointMake(1.0, 0.0);
         _leftGradientLayer.anchorPoint = CGPointMake(0, 0);
         _leftGradientLayer.frame = CGRectMake(0, 0, self.bounds.size.width, self.bounds.size.height);
         _leftGradientLayer.masksToBounds = YES;
@@ -63,7 +76,9 @@
         UIColor *color = [self.tintColor colorWithAlphaComponent:0.7];
         UIColor *clearColor = [self.tintColor colorWithAlphaComponent:0];
         _rightGradientLayer = [CAGradientLayer layer];
-        _rightGradientLayer.colors = @[clearColor, color];
+        /// 注意这里的颜色数组是 CGColor 不是 UIColor，不然就会被坑
+        _rightGradientLayer.colors = @[ (__bridge id) clearColor.CGColor,
+                                        (__bridge id) color.CGColor ];
         _rightGradientLayer.startPoint = CGPointMake(0.5, 0);
         _rightGradientLayer.endPoint = CGPointMake(0, 0);
         _rightGradientLayer.anchorPoint = CGPointMake(0, 0);
@@ -100,14 +115,14 @@
 
 - (void)startAnimating {
     self.animating = YES;
-    
+
     self.leftAnimation.duration = self.duration;
     [self.leftGradientLayer addAnimation:self.leftAnimation forKey:@"leftAnimation"];
-    
+
     self.rightAnimation.duration = self.duration;
     self.rightAnimation.timeOffset = 0.5 * self.duration;
     [self.rightGradientLayer addAnimation:self.rightAnimation forKey:@"rightAnimation"];
-    
+
     [self setNeedsLayout];
     [self layoutIfNeeded];
 }
@@ -116,14 +131,14 @@
     self.animating = false;
     [self.leftGradientLayer removeAllAnimations];
     [self.rightGradientLayer removeAllAnimations];
-    
+
     [self setNeedsLayout];
     [self layoutIfNeeded];
 }
 
 - (void)tintColorDidChange {
     [super tintColorDidChange];
-    
+
     if ([self isAnimating]) {
         [self startAnimating];
     } else {
