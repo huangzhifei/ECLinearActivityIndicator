@@ -55,12 +55,7 @@
 
 - (CAGradientLayer *)leftGradientLayer {
     if (!_leftGradientLayer) {
-        UIColor *color = [self.tintColor colorWithAlphaComponent:0.7];
-        UIColor *clearColor = [self.tintColor colorWithAlphaComponent:0];
         _leftGradientLayer = [CAGradientLayer layer];
-        /// 注意这里的颜色数组是 CGColor 不是 UIColor，不然就会被坑
-        _leftGradientLayer.colors = @[ (__bridge id) clearColor.CGColor,
-                                       (__bridge id) color.CGColor ];
         _leftGradientLayer.startPoint = CGPointMake(0.5, 0.0);
         _leftGradientLayer.endPoint = CGPointMake(1.0, 0.0);
         _leftGradientLayer.anchorPoint = CGPointMake(0, 0);
@@ -73,12 +68,7 @@
 
 - (CAGradientLayer *)rightGradientLayer {
     if (!_rightGradientLayer) {
-        UIColor *color = [self.tintColor colorWithAlphaComponent:0.7];
-        UIColor *clearColor = [self.tintColor colorWithAlphaComponent:0];
         _rightGradientLayer = [CAGradientLayer layer];
-        /// 注意这里的颜色数组是 CGColor 不是 UIColor，不然就会被坑
-        _rightGradientLayer.colors = @[ (__bridge id) clearColor.CGColor,
-                                        (__bridge id) color.CGColor ];
         _rightGradientLayer.startPoint = CGPointMake(0.5, 0);
         _rightGradientLayer.endPoint = CGPointMake(0, 0);
         _rightGradientLayer.anchorPoint = CGPointMake(0, 0);
@@ -117,10 +107,17 @@
     self.animating = YES;
 
     self.leftAnimation.duration = self.duration;
+    UIColor *color = [self.tintColor colorWithAlphaComponent:0.7];
+    UIColor *clearColor = [self.tintColor colorWithAlphaComponent:0];
+    /// 注意这里的颜色数组是 CGColor 不是 UIColor，不然就会被坑
+    self.leftGradientLayer.colors = @[ (__bridge id) clearColor.CGColor,
+                                       (__bridge id) color.CGColor];
     [self.leftGradientLayer addAnimation:self.leftAnimation forKey:@"leftAnimation"];
 
     self.rightAnimation.duration = self.duration;
     self.rightAnimation.timeOffset = 0.5 * self.duration;
+    self.rightGradientLayer.colors = @[ (__bridge id) clearColor.CGColor,
+                                       (__bridge id) color.CGColor];
     [self.rightGradientLayer addAnimation:self.rightAnimation forKey:@"rightAnimation"];
 
     [self setNeedsLayout];

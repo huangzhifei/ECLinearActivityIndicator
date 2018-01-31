@@ -1,7 +1,7 @@
 Pod::Spec.new do |s|
 
   s.name         = "ECLinearActivityIndicator"
-  s.version      = "0.0.2"
+  s.version      = "0.0.4"
   s.summary      = "Add the missing network activity indicator on iPhone X"
 
   s.description  = <<-DESC

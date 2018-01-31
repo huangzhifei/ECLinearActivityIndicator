@@ -47,7 +47,6 @@
     if (visible) {
         if (self.indicatorWindow == nil) {
             self.indicatorWindow = [[UIWindow alloc] initWithFrame:self.statusBarFrame];
-            self.indicatorWindow.hidden = NO;
             // 对于 UIWindows 只需要改变 zIndex 就行
             self.indicatorWindow.windowLevel = UIWindowLevelStatusBar + 1;
             
