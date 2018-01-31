@@ -9,6 +9,8 @@
 #import "ViewController.h"
 #import "ECLinearActivityIndicatorView.h"
 
+NSInteger gCount = 0;
+
 @interface ViewController ()
 
 @property (nonatomic, strong) ECLinearActivityIndicatorView *indicatorView;
@@ -28,7 +30,15 @@
 }
 
 - (IBAction)startNetwork:(id)sender {
-    [UIApplication sharedApplication].networkActivityIndicatorVisible = ![UIApplication sharedApplication].isNetworkActivityIndicatorVisible;
+    gCount ++;
+    NSLog(@"%ld",gCount);
+    [UIApplication sharedApplication].networkActivityIndicatorVisible = YES;
+}
+
+- (IBAction)stopNetwork:(id)sender {
+    gCount --;
+    NSLog(@"%ld",gCount);
+    [UIApplication sharedApplication].networkActivityIndicatorVisible = NO;
 }
 
 - (IBAction)startAnimation:(id)sender {
