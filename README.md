@@ -3,5 +3,5 @@
 
 ## cocoapod
 
-支持 cocoapod，目前版本是 0.0.2
+支持 cocoapod，目前版本是 0.0.4
 
